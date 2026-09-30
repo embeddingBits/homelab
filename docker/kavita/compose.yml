@@ -1,0 +1,12 @@
+services:
+  kavita:
+    image: docker.io/jvmilazz0/kavita:latest
+    container_name: kavita
+    volumes:
+      - ${KAVITA_BOOKS_DIR}:/books
+      - ../../data/kavita/config:/kavita/config
+    environment:
+      - TZ=Asia/Kolkata
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
