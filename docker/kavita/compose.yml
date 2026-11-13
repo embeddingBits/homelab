@@ -4,6 +4,7 @@ services:
     container_name: kavita
     volumes:
       - ${KAVITA_BOOKS_DIR}:/books
+      - ${KAVITA_COLLEGE_DIR}:/college_notes
       - ../../data/kavita/config:/kavita/config
     environment:
       - TZ=Asia/Kolkata
