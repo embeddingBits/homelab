@@ -1,0 +1,16 @@
+services:
+  glance:
+    container_name: glance
+    image: docker.io/glanceapp/glance
+    restart: unless-stopped
+    volumes:
+      - ../../data/glance/config:/app/config
+      - ../../data/glance/assets:/app/assets
+      - /etc/localtime:/etc/localtime:ro
+      # Rootless Podman socket (Docker-compatible API) so the docker-containers
+      # widget can show container status. Podman is socket-activated: the socket
+      # only spins up when Glance connects to it.
+      - ${PODMAN_SOCKET}:/var/run/podman.sock:ro
+    ports:
+      - 7070:7070
+    env_file: .env
