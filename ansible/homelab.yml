@@ -65,7 +65,6 @@
         state: directory
         mode: "0755"
       loop:
-        - homepage/config
         - kavita/config
         - navidrome/data
       when: homelab_action == 'up'

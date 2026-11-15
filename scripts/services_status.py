@@ -22,7 +22,6 @@ ICON_URL = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/{}.svg"
 CHECK_TIMEOUT = 3  # seconds
 
 SERVICES = [
-    {"name": "Homepage", "container": "homepage", "port": 3000, "icon": "homepage"},
     {
         "name": "Immich",
         "container": "immich_server",

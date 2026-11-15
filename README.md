@@ -11,7 +11,6 @@ My selfhosted homelab setup managed using [Podman](https://podman.io/) and **Pod
 
 | Service    | Description            | Stack                |
 | ---------- | ---------------------- | -------------------- |
-| Homepage   | Dashboard              | `docker/homepage`    |
 | Glance     | Dashboard / analytics  | `docker/glance`      |
 | Trilium Next | Notes app              | Server tarball (standalone) |
 | Kavita     | Book / reading server  | `docker/kavita`      |
@@ -28,7 +27,7 @@ My selfhosted homelab setup managed using [Podman](https://podman.io/) and **Pod
 └── ansible/            # Ansible playbook, inventory and vars
 ```
 
-Service state and app config live under `data/` (Homepage dashboards,
+Service state and app config live under `data/` (Glance's dashboard config,
 Navidrome's database, Kavita's library config, and so on). This directory is
 deliberately not committed — it holds runtime data and would be useless to
 clone. Trilium Next runs standalone from a tarball in `docker/TriliumNotes/`,
@@ -51,7 +50,7 @@ scripts/homelab.sh up            # start everything
 scripts/homelab.sh up kavita     # start one stack
 scripts/homelab.sh ps            # container status
 scripts/homelab.sh logs -f       # logs (follow)
-scripts/homelab.sh restart homepage
+scripts/homelab.sh restart glance
 scripts/homelab.sh down          # stop and remove everything
 ```
 
@@ -61,8 +60,8 @@ The `ansible/` directory contains a playbook that manages the services on this
 host. It runs locally (rootless, as the current user) and covers the full
 deploy: installing prerequisites, syncing the repo, and starting the stacks.
 The stacks it manages are listed in `ansible/group_vars/all.yml` (currently
-homepage, kavita, and navidrome; Immich and Glance are started with the
-wrapper script for now).
+kavita and navidrome; Immich and Glance are started with the wrapper script
+for now).
 
 ```sh
 cd ansible

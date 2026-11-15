@@ -24,7 +24,7 @@ Examples:
   $(basename "$0") up
   $(basename "$0") up kavita
   $(basename "$0") logs -f
-  $(basename "$0") restart homepage
+  $(basename "$0") restart glance
   $(basename "$0") down
 EOF
 }
