@@ -42,8 +42,9 @@ reference the values as `${VAR}` placeholders.
 ## Managing services
 
 `scripts/homelab.sh` wraps podman-compose. Stacks are directories under
-`docker/` with a `compose.yml`; with no stack name the command runs against
-every stack.
+`docker/` with a compose file (`compose.yml` or `docker-compose.yml`); with
+no stack name the command runs against every stack. Directories without a
+compose file (e.g. the standalone Trilium tarball) are skipped with a note.
 
 ```sh
 scripts/homelab.sh up            # start everything

@@ -16,7 +16,8 @@ Commands:
   restart   Restart running containers (use "down" then "up" to fully recreate)
   ps        List containers
 
-Stacks are directories under $COMPOSE_DIR containing a compose.yml.
+Stacks are directories under $COMPOSE_DIR containing a compose file
+(compose.yml / compose.yaml / docker-compose.yml / docker-compose.yaml).
 With no stack name, the command runs against every stack.
 
 Examples:
@@ -28,21 +29,35 @@ Examples:
 EOF
 }
 
+compose_file() {
+	local dir="$1"
+	local f
+	for f in compose.yml compose.yaml docker-compose.yml docker-compose.yaml; do
+		if [[ -f "$dir/$f" ]]; then
+			return 0
+		fi
+	done
+	return 1
+}
+
 stacks() {
 	local name="${1:-}"
 	if [[ -n "$name" ]]; then
 		local dir="$COMPOSE_DIR/$name"
-		if [[ ! -f "$dir/compose.yml" ]]; then
-			echo "Error: no stack '$name' (missing $dir/compose.yml)" >&2
+		if ! compose_file "$dir"; then
+			echo "Error: no stack '$name' (no compose file in $dir)" >&2
 			exit 1
 		fi
 		printf '%s\n' "$dir"
 	else
-		local found=0
+		local found=0 dir
 		for dir in "$COMPOSE_DIR"/*/; do
-			if [[ -f "${dir}compose.yml" ]]; then
-				printf '%s\n' "${dir%/}"
+			dir="${dir%/}"
+			if compose_file "$dir"; then
+				printf '%s\n' "$dir"
 				found=1
+			elif [[ -n "$(ls -A "$dir" 2>/dev/null)" ]]; then
+				echo "Note: skipping $(basename "$dir") (no compose file)" >&2
 			fi
 		done
 		if [[ $found -eq 0 ]]; then
