@@ -14,3 +14,7 @@ services:
     ports:
       - 7070:7070
     env_file: .env
+
+networks:
+  podman:
+    external: true
