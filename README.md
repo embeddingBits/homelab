@@ -1,21 +1,21 @@
 # Selfhosted Setup
 
-My selfhosted homelab setup managed using [Podman](https://podman.io/) and **Podman Compose**. Services are managed either with the `scripts/homelab.sh` wrapper or the Ansible playbook in `ansible/`.
+My selfhosted homelab setup managed using [Podman](https://podman.io/) and **Podman Compose**. Services are managed with the `scripts/homelab.sh` wrapper.
 
 # Infrastructure
 ## Tools 
 - [Podman](https://podman.io/): Container orchestration
-- [Ansible](https://ansible.com/): Automation and management
 
 ## Services
 
 | Service    | Description            | Stack                |
 | ---------- | ---------------------- | -------------------- |
 | Glance     | Dashboard / analytics  | `docker/glance`      |
-| Trilium Next | Notes app              | Server tarball (standalone) |
+| Trilium Next | Notes app              | `docker/TriliumNotes` |
 | Kavita     | Book / reading server  | `docker/kavita`      |
 | Navidrome  | Music streaming server | `docker/navidrome`   |
 | Immich     | Photo/Video storage server | `docker/immich`  |
+| Actual Budget | Finance / budgeting | `docker/budget`      |
 ## Directory layout
 
 ```
@@ -23,15 +23,14 @@ My selfhosted homelab setup managed using [Podman](https://podman.io/) and **Pod
 ├── docker/             # Docker compose files
 ├── data/               # Service data and config (gitignored)
 ├── media/
-├── scripts/            # Some scripts to manage services
-└── ansible/            # Ansible playbook, inventory and vars
+└── scripts/            # Some scripts to manage services
 ```
 
 Service state and app config live under `data/` (Glance's dashboard config,
 Navidrome's database, Kavita's library config, and so on). This directory is
 deliberately not committed — it holds runtime data and would be useless to
-clone. Trilium Next runs standalone from a tarball in `docker/TriliumNotes/`,
-which is also gitignored for the same reason.
+clone. Trilium Next keeps its notes at `${TRILIUM_DATA_DIR}`, outside the repo
+for the same reason.
 
 Secrets are kept in `.env` files next to each compose file (e.g.
 `docker/immich/.env` holds the database password). The `.env` pattern is
