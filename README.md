@@ -10,7 +10,7 @@ My selfhosted homelab setup managed using [Podman](https://podman.io/) and **Pod
 
 | Service    | Description            | Stack                |
 | ---------- | ---------------------- | -------------------- |
-| Glance     | Dashboard / analytics  | `docker/glance`      |
+| Homepage   | Dashboard              | `docker/homepage`    |
 | Trilium Next | Notes app              | `docker/TriliumNotes` |
 | Kavita     | Book / reading server  | `docker/kavita`      |
 | Navidrome  | Music streaming server | `docker/navidrome`   |
@@ -26,7 +26,7 @@ My selfhosted homelab setup managed using [Podman](https://podman.io/) and **Pod
 └── scripts/            # Some scripts to manage services
 ```
 
-Service state and app config live under `data/` (Glance's dashboard config,
+Service state and app config live under `data/` (Homepage's dashboard config,
 Navidrome's database, Kavita's library config, and so on). This directory is
 deliberately not committed — it holds runtime data and would be useless to
 clone. Trilium Next keeps its notes at `${TRILIUM_DATA_DIR}`, outside the repo

@@ -114,6 +114,12 @@ main() {
 
 	case "$command" in
 		up)
+			# Make sure the podman Docker-compatible API socket exists before
+			# starting stacks that mount it (homepage). The socket unit stays
+			# disabled at boot (nothing podman-related autostarts); starting it
+			# here is on-demand, and the API daemon behind it only activates
+			# when a client actually connects.
+			systemctl --user start podman.socket 2>/dev/null || true
 			run_all up -d "${passthrough[@]}"
 			;;
 		down)
