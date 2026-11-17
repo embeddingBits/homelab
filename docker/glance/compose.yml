@@ -12,7 +12,7 @@ services:
       # only spins up when Glance connects to it.
       - ${PODMAN_SOCKET}:/var/run/podman.sock:ro
     ports:
-      - 7070:7070
+      - 127.0.0.1:7070:7070
     env_file: .env
 
 networks:

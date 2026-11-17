@@ -74,6 +74,19 @@ run_in() {
 	(cd "$dir" && podman-compose "$@")
 }
 
+# Run a podman-compose command against every stack. A failure in one stack
+# is reported but does not stop the remaining stacks.
+run_all() {
+	local failed=0 dir
+	for dir in "${DIRS[@]}"; do
+		if ! run_in "$dir" "$@"; then
+			echo "Error: stack $(basename "$dir") failed" >&2
+			failed=1
+		fi
+	done
+	return "$failed"
+}
+
 main() {
 	if [[ $# -eq 0 ]]; then
 		usage
@@ -94,36 +107,30 @@ main() {
 		shift
 	done
 
-	local -a dirs=()
+	DIRS=()
 	while IFS= read -r dir; do
-		dirs+=("$dir")
+		DIRS+=("$dir")
 	done < <(stacks "$stack")
 
 	case "$command" in
 		up)
-			for dir in "${dirs[@]}"; do
-				run_in "$dir" up -d "${passthrough[@]}"
-			done
+			run_all up -d "${passthrough[@]}"
 			;;
 		down)
-			for dir in "${dirs[@]}"; do
-				run_in "$dir" down "${passthrough[@]}"
-			done
+			run_all down "${passthrough[@]}"
 			;;
 		restart)
-			for dir in "${dirs[@]}"; do
-				run_in "$dir" restart "${passthrough[@]}"
-			done
+			run_all restart "${passthrough[@]}"
 			;;
 		ps)
-			for dir in "${dirs[@]}"; do
+			for dir in "${DIRS[@]}"; do
 				run_in "$dir" ps "${passthrough[@]}"
 			done
 			;;
 		logs)
 			if [[ $follow -eq 1 ]]; then
 				local -a pids=()
-				for dir in "${dirs[@]}"; do
+				for dir in "${DIRS[@]}"; do
 					(cd "$dir" && exec podman-compose logs -f "${passthrough[@]}") &
 					pids+=("$!")
 				done
@@ -131,7 +138,7 @@ main() {
 				wait
 				trap - INT TERM EXIT
 			else
-				for dir in "${dirs[@]}"; do
+				for dir in "${DIRS[@]}"; do
 					run_in "$dir" logs --tail=200 "${passthrough[@]}"
 				done
 			fi

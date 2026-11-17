@@ -11,7 +11,7 @@ services:
       # You might want to limit this with something like Docker Networks, reverse proxies, or firewall rules,
       # however be aware that using UFW is known to not work with default Docker installations, see:
       # https://docs.docker.com/engine/network/packet-filtering-firewalls/#docker-and-ufw
-      - '8080:8080'
+      - '127.0.0.1:8080:8080'
     volumes:
       # Trilium stores its data in `trilium-data` next to this file. To use another directory
       # on the host, change the part before the colon only.
