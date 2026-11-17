@@ -54,5 +54,5 @@ scripts/homelab.sh down          # stop and remove everything
 ```
 
 # TODO
-- [x] Ansible Playbooks
+- [ ] Recommendation and Downloading pipeline for Navidrome
 - [ ] Migrate to Kubernetes
