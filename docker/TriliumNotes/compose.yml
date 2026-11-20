@@ -1,23 +1,9 @@
 services:
   trilium:
-    # Optionally, replace `latest` with a version tag like `v0.90.3`
-    # Using `latest` may cause unintended updates to the container
     image: docker.io/triliumnext/trilium:latest
-    # Restart the container unless it was stopped by the user
     restart: unless-stopped
     ports:
-      # By default, Trilium will be available at http://localhost:8080
-      # It will also be accessible at http://<host-ip>:8080
-      # You might want to limit this with something like Docker Networks, reverse proxies, or firewall rules,
-      # however be aware that using UFW is known to not work with default Docker installations, see:
-      # https://docs.docker.com/engine/network/packet-filtering-firewalls/#docker-and-ufw
       - '127.0.0.1:8080:8080'
     volumes:
-      # Host path comes from TRILIUM_DATA_DIR in .env (see .env.example).
       - ${TRILIUM_DATA_DIR}:/home/node/trilium-data
-      # Uses the host's timezone instead of UTC. If the host has no /etc/localtime, remove this
-      # line and set `TZ` below instead.
       - ${TZ_FILE}:/etc/localtime:ro
-    # environment:
-    #   # A timezone identifier from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    #   - TZ=America/New_York

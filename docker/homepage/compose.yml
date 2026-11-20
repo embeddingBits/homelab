@@ -5,7 +5,6 @@ services:
     ports:
       - '127.0.0.1:3000:3000'
     volumes:
-      # Host paths come from .env (see .env.example).
       - ${HOMEPAGE_CONFIG_DIR}:/app/config
       - ${HOMEPAGE_MEDIA_DIR}:${HOMEPAGE_MEDIA_DIR}:ro
       - ${PODMAN_SOCKET}:/var/run/podman.sock:ro
