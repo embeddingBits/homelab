@@ -3,7 +3,7 @@
 homelab_root: /srv/homelab
 
 # Git remote used if the repo needs to be cloned from scratch.
-repo_url: git@github.com:embeddingBits/selfhosted
+repo_url: git@github.com:embeddingBits/homelab
 repo_version: main
 
 stacks:
