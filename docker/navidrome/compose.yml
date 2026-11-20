@@ -10,6 +10,6 @@ services:
       # Optional: put your config options customization here. Examples:
       # ND_LOGLEVEL: debug
     volumes:
-      - "../../data/navidrome/data:/data"
+      # Host paths come from .env (see .env.example).
+      - "${NAVIDROME_DATA_DIR}:/data"
       - "${NAVIDROME_MUSIC_DIR}:/music:ro"
-

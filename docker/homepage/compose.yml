@@ -5,12 +5,10 @@ services:
     ports:
       - '127.0.0.1:3000:3000'
     volumes:
-      - ../../data/homepage/config:/app/config
-      # Rootless Podman socket (Docker-compatible API) so the docker
-      # integration can show container status. Podman is socket-activated:
-      # the API daemon only starts when Homepage connects. scripts/homelab.sh
-      # starts the (boot-disabled) socket unit before bringing stacks up.
+      # Host paths come from .env (see .env.example).
+      - ${HOMEPAGE_CONFIG_DIR}:/app/config
+      - ${HOMEPAGE_MEDIA_DIR}:${HOMEPAGE_MEDIA_DIR}:ro
       - ${PODMAN_SOCKET}:/var/run/podman.sock:ro
-      - /etc/localtime:/etc/localtime:ro
+      - ${TZ_FILE}:/etc/localtime:ro
     env_file: .env
     restart: unless-stopped

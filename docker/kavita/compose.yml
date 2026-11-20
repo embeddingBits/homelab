@@ -3,9 +3,10 @@ services:
     image: docker.io/jvmilazz0/kavita:latest
     container_name: kavita
     volumes:
+      # Host paths come from .env (see .env.example).
       - ${KAVITA_BOOKS_DIR}:/books
       - ${KAVITA_COLLEGE_DIR}:/college_notes
-      - ../../data/kavita/config:/kavita/config
+      - ${KAVITA_CONFIG_DIR}:/kavita/config
     environment:
       - TZ=Asia/Kolkata
     ports:
