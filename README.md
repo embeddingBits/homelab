@@ -15,7 +15,10 @@ My selfhosted homelab setup managed using [Podman](https://podman.io/) and **Pod
 | Kavita     | Book / reading server  | `docker/kavita`      |
 | Navidrome  | Music streaming server | `docker/navidrome`   |
 | Immich     | Photo/Video storage server | `docker/immich`  |
+| Vaultwarden | Password Management | `docker/vaultwarden`      |
 | Actual Budget | Finance / budgeting | `docker/budget`      |
+
+
 ## Directory layout
 
 ```
