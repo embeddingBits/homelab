@@ -1,8 +1,7 @@
+# Podman vars
 .env
-media/
 backups/
 data/
-.ansible
 cache/
 *.db
 *.db-shm
